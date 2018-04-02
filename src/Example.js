@@ -21,22 +21,23 @@ export default class Example extends Component {
   componentDidMount() {}
 
   componentWillUnmount() {
-    // document.removeEventListener('mousemove', this.handleKnobMouseMove)
+    document.removeEventListener('mousemove', this.handleKnobMouseMove)
   }
 
   handleMouseDown = () => {
-    // this.setState({ isHighlighting: true })
+    console.log('handleMouseDown')
+    this.setState({ isHighlighting: true })
   }
 
   handleHighlightStart = boundaryType => {
-    // this.setState({ isHighlighting: true, activeBoundary: boundaryType })
+    this.setState({ isHighlighting: true, activeBoundary: boundaryType })
   }
 
   handleMouseMove = event => {
     if (true || this.state.isHighlighting === false) {
       return
     }
-    // console.debug('handleMouseMove')
+    console.log('handleMouseMove')
 
     const range = document.caretRangeFromPoint(event.clientX, event.clientY)
     if (this.state.activeBoundary === 'start') {
@@ -44,16 +45,16 @@ export default class Example extends Component {
     } else if (this.state.activeBoundary === 'end') {
       this.handleEndKnobMove(range)
     } else {
-      // console.debug('inactive boundary')
+      console.log('inactive boundary')
     }
   }
 
   handleHighlightEnd = event => {
-    // console.debug('handleHighlightEnd', this.state.selection.range)
+    // console.log('handleHighlightEnd', this.state.selection.range)
     // this.state.selection.range.endContainer.focus()
     // console.log('ok 1')
     const knob = this.div.querySelectorAll('.Boundary')
-    // console.debug({ knob })
+    // console.log({ knob })
     this.setState({ isHighlighting: false }, () => {
       // console.log('ok 2')
     })
@@ -79,9 +80,9 @@ export default class Example extends Component {
       ) / document.documentElement.clientWidth
 
     const measurements = [nodesInElement[0]].map(node => {
-      //   console.debug(node.parentNode)
+      //   console.log(node.parentNode)
       const style = window.getComputedStyle(node.parentNode)
-      // console.debug(style)
+      // console.log(style)
       const { fontFamily, fontSize, fontWeight } = style
 
       // const canvas = document.getElementById('canvas')
@@ -101,18 +102,18 @@ export default class Example extends Component {
         fontSize: parseInt(fontSize),
         origin: 'baseline'
       })
-      console.debug({ fontSize })
-      console.debug(metrics)
+      // console.log({ fontSize })
+      // console.log(metrics)
 
       return 'measurement'
     })
-    // console.debug(measurements)
+    // console.log(measurements)
 
     this.setState({ selection })
   }
 
   handleStartKnobMove = startRange => {
-    console.debug('handleStartKnobMove')
+    console.log('handleStartKnobMove')
     const range = document.createRange()
     range.setStart(startRange.startContainer, startRange.startOffset)
     range.setEnd(
@@ -125,7 +126,7 @@ export default class Example extends Component {
   }
 
   handleEndKnobMove = endRange => {
-    console.debug('handleEndKnobMove')
+    console.log('handleEndKnobMove')
     const range = document.createRange()
     range.setStart(
       this.state.selection.range.startContainer,
